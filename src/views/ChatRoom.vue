@@ -1,16 +1,8 @@
 <template>
   <div class="chat">
+<chat-box >
 
-    <aside class="chat__sidebar">
-      <h3>People</h3>
-      <div id="users">
-        <ol>
-          <li v-for="user in users" :key="user">{{ user }}</li>
-        </ol>
-      </div>
-    </aside>
-
-    <section class="chat__main">
+   <section class="chat__main">
       <ol class="chat__messages">
         <chat-message v-for="msg in messages" :msg="msg" :key="msg.createAt"></chat-message>
       </ol>
@@ -23,10 +15,39 @@
           <button type="submit">Send</button>
         </form>
 
-        <button @click="startAudioChat">Audio Chat</button>
+        <button :disabled="isButtonDisabled" @click="startAudioChat">Audio Chat</button>
 
       </footer>
     </section>
+</chat-box>
+    <aside class="chat__sidebar">
+      <h3 v-if="loading">loading</h3>
+      <h3 v-else>people</h3>
+      <div id="users">
+        <ol>
+          <li v-for="user in users" :key="user">{{ user }}</li>
+        </ol>
+      </div>
+    </aside>
+      <game />
+
+    <!-- <section class="chat__main">
+      <ol class="chat__messages">
+        <chat-message v-for="msg in messages" :msg="msg" :key="msg.createAt"></chat-message>
+      </ol>
+
+      <footer class="chat__footer">
+
+        <form @submit.prevent="sendMessage">
+          <input type="text" placeholder="Message" required v-model="message" autofocus autocomplete="off" />
+
+          <button type="submit">Send</button>
+        </form>
+
+        <button :disabled="isButtonDisabled" @click="startAudioChat">Audio Chat</button>
+
+      </footer>
+    </section> -->
     <v-dialog/>
     <audio id="audio-tag" autoplay playsinline></audio>
   </div>
@@ -36,6 +57,8 @@
 import SimplePeer from 'simple-peer'
 
 import ChatMessage from '@/components/ChatMessage'
+import Game from '@/components/Game'
+import ChatBox from '../components/ChatBox.vue'
 export default {
   name: 'chat-room',
   props: {
@@ -51,6 +74,7 @@ export default {
   data() {
     return {
       message: '',
+      loading:false,
       messages: [],
       isButtonDisabled: false,
       users: ['Henry', 'David'],
@@ -60,20 +84,21 @@ export default {
   },
   sockets: {
     shareAudioModal(name) {
-      this.$modal.show('dialog', {
-        title: 'Start Audio Conversation',
-        text: name + 'would like to start an audio chat with you.',
-        buttons: [
-          {
-            title: 'Accept', // Button title
-            default: true, // Will be triggered by default if 'Enter' pressed.
-            handler: this.acceptAudioChat, // Button click handler
-          },
-          {
-            title: 'Refuse',
-          },
-        ],
-      })
+      // this.$modal.show('dialog', {
+      //   title: 'Start Audio Conversation',
+      //   text: name + 'would like to start an audio chat with you.',
+      //   buttons: [
+      //     {
+      //       title: 'Accept', // Button title
+      //       default: true, // Will be triggered by default if 'Enter' pressed.
+      //       handler: this.acceptAudioChat, // Button click handler
+      //     },
+      //     {
+      //       title: 'Refuse',
+      //     },
+      //   ],
+      // })
+      this.acceptAudioChat()
     },
     updateUserList(users) {
       this.users = users
@@ -115,7 +140,7 @@ export default {
     async acceptAudioChat() {
       console.log('YES!!')
       this.$modal.hide('dialog')
-
+      this.loading = true
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: false,
@@ -136,9 +161,14 @@ export default {
             ],
           },
         })
+        this.isButtonDisabled = true;
+      this.loading = false
+        
         this.bindEvents(this.peer)
       } catch (e) {
         console.log(e.message)
+      this.loading = false
+
       }
     },
     async startAudioChat() {
@@ -148,8 +178,10 @@ export default {
           audio: true,
         })
         this.$socket.emit('askAudio')
+
       } catch (e) {
         console.log(e.message)
+
       }
     },
     sendMessage() {
@@ -178,11 +210,14 @@ export default {
         alert(err)
       } else {
         console.log('No error')
+        this.startAudioChat()
       }
     })
   },
   components: {
     ChatMessage,
+    Game,
+    ChatBox,
   },
 }
 </script>
