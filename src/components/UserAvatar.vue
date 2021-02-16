@@ -31,7 +31,7 @@ export default {
   name: "UserAvatar",
   props: {
     avatar: {
-      type: String,
+      type: Object,
       default: null
     },
     active: {

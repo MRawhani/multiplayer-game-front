@@ -72,15 +72,15 @@ export default {
 ctx.shadowOffsetY = 0;
 ctx.shadowBlur    = 0;
 ctx.shadowColor   = "";
-        ctx.fillStyle = color;
-        ctx.fillRect(x * cellSize+4, y * cellSize+4, cellSize-7, cellSize-7);
+        ctx.fillStyle = `${color}69`;
+        ctx.fillRect(x * cellSize+1, y * cellSize+1, cellSize-2, cellSize-2);
       };
 
       const clear = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-         ctx.fillStyle = '#374bb713';
+      //    ctx.fillStyle = '#374bb713';
 
-      ctx.fillRect(0,0,400,400)
+      // ctx.fillRect(0,0,400,400)
       };
 
       const drawGrid = () => {
@@ -97,13 +97,13 @@ ctx.shadowColor   = "gray";
           ctx.lineTo(i * cellSize, (numCells) * cellSize);
           ctx.moveTo(0, i * cellSize);
           ctx.lineTo(numCells * cellSize, i * cellSize);
-            ctx.lineWidth = 7;
+            ctx.lineWidth = 1;
           
         }
 var gradient = ctx.createLinearGradient(0, 0, numCells * cellSize, 0);
-gradient.addColorStop("0", "magenta");
-gradient.addColorStop("0.5" ,"#FFDB00");
-gradient.addColorStop("1.0", "red");
+gradient.addColorStop("0", "#4F61C849");
+gradient.addColorStop("0.5" ,"#DAACE349");
+gradient.addColorStop("1.0", "#5548A649");
         ctx.strokeStyle='#374bb7';
         ctx.stroke();
       };

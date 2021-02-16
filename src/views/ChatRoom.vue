@@ -90,14 +90,14 @@
       <div class="count">{{users.length || 0}}</div>
     </div>
     <div class="header">Chatting</div>
-    <div class="right-content">
-      <section class="chat__main">
+    <div id="out" class="right-content">
+      <!-- <section class="chat__main"> -->
       <ol class="chat__messages">
         <chat-message v-for="msg in messages" :msg="msg" :key="msg.createAt"></chat-message>
       </ol>
 
   
-    </section>
+    <!-- </section> -->
     
     </div>
         <footer class="chat__footer">
@@ -212,6 +212,11 @@ export default {
     newMessage(msg) {
       console.log(msg)
       this.messages.push(msg)
+      debugger
+      setTimeout(() => {
+        const out = this.$el.querySelector("#out")
+out.scrollTop = out.scrollHeight-out.clientHeight;
+      }, 1);
     },
     transmitOffer(data) {
       console.log('receiving Offer', data)
