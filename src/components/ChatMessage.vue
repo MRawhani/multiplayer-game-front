@@ -1,5 +1,12 @@
 <template>
-  <li class="message">
+  <div class="members task-box "
+  :style="{background:`${msg.color}36`}"
+  >
+     <img
+            :src="`http://i.pravatar.cc/500?img=${msg.from||7}`"
+            alt="member">
+  <div class="message">
+      
     <div class="message__title">
       <h4> {{ msg.from }}</h4>
       <span>
@@ -13,7 +20,8 @@
       </p>
     </div>
 
-  </li>
+  </div>
+  </div>
 </template>
 
 <script>

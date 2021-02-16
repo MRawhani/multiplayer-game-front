@@ -6,4 +6,5 @@
 
 <style>
 @import './assets/css/styles.css';
+@import './assets/css/chat.css';
 </style>

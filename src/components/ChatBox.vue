@@ -1,31 +1,24 @@
 <template>
-  <div>
+  <div style="
+      position: absolute;
+    top: 0;
+    right: 5px;">
     <div id="chat" class="animated-chat tada" @click="loadChatbox">Chat</div>
     <div class="chatbox" id="chatbox">
-      <span class="chat-text">Chatting Yuk!</span>
+      <span class="chat-text">Chatting!</span>
       <div
         id="smartchatbox_img901621879"
         style="
-          width: 280px;
+          width: 100%;
           height: 450px;
           overflow: hidden;
           margin: auto;
           padding: 0;
         "
       >
-        <div
-          id="smartchatbox901621879"
-          style="
-            width: 280px;
-            height: 450px;
-            overflow: hidden;
-            margin: auto;
-            padding: 0;
-            border: 0;
-          "
-        >
+       
           <slot />
-        </div>
+    
       </div>
 
       <div id="close-chat" @click="closeChatbox">&times;</div>
@@ -81,8 +74,12 @@ export default {
   cursor: pointer;
   font-family: Arial, sans-serif;
   text-align: center;
-  height: 20px;
-  line-height: 20px;
+ height: 25px;
+    display: flex;
+    line-height: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
 }
 #chat,
 #close-chat,
@@ -96,19 +93,23 @@ export default {
   content: "";
 }
 .chatbox {
+    max-width: 90%;
   position: fixed;
   bottom: 0;
-  left: 50px;
+  left: 20px;
   margin: 0 0 -1500px;
   background: #fff;
-  border-bottom: none;
-  padding: 28px 10px 10px;
-  z-index: 100000;
+     /* border-bottom: none; */
+    padding: 45px 0 0;
+    z-index: 100000;
+    border: 1px solid #e9e9e9;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 1px 5px 15px #777474b5;
 }
 #close-chat {
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 8px;
+  right: 5px;
   font-size: 24px;
   border: 1px solid #dedede;
   width: 20px;
@@ -118,8 +119,8 @@ export default {
 #minim-chat,
 #maxi-chat {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 6px;
+  left: -5px;
   width: 100%;
   height: 20px;
   line-height: 20px;
@@ -146,33 +147,38 @@ export default {
 }
 .chat-text {
   position: absolute;
-  top: 5px;
+  top: 8px;
   left: 10px;
   font-size: 16px;
 }
 #chat {
-  width: 40px;
-  border-radius: 3px;
+  width: 60px;
+  /* border-radius: 3px; */
   padding: 2px 8px;
-  font-size: 12px;
-  background: #fff;
+  font-size: 16px;
+  background: #611fc5 ;
+  color: #fff;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+      position: absolute;
+    top: 5px;
+    right: 5px;
+    border: 1px solid #0000003b;
 }
 #chat:before {
   border-width: 10px 11px 0 0;
-  border-color: #a8a8a8 transparent transparent;
+  border-color: #611fc5  transparent transparent;
   left: 7px;
   bottom: -10px;
 }
 #chat:after {
   border-width: 9px 8px 0 0;
-  border-color: #fff transparent transparent;
+  border-color: #611fc5  transparent transparent;
   left: 8px;
   bottom: -8px;
 }
 #chat:hover {
-  background: #ddd;
+  /* background: #ddd; */
   -webkit-animation-name: hvr-pulse-grow;
   animation-name: hvr-pulse-grow;
   -webkit-animation-duration: 0.3s;
